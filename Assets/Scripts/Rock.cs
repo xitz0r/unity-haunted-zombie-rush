@@ -5,7 +5,6 @@ public class Rock : MovableObject {
 
     [SerializeField] Vector3 topPosition;
     [SerializeField] Vector3 bottomPosition;
-    public int speed;
 
     // Use this for initialization
     void Start () {
