@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections;
 
 public class Player : MonoBehaviour {
@@ -6,8 +7,18 @@ public class Player : MonoBehaviour {
     private Animator animator;
     private bool jump;
     private Rigidbody rigidbody;
-    [SerializeField] private AudioClip sfxJump;
     private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip sfxJump;
+    [SerializeField]
+    private AudioClip sfxDeath;
+    
+    void Awake()
+    {
+        Assert.IsNotNull(this.sfxJump);
+        Assert.IsNotNull(this.sfxDeath);
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -35,6 +46,16 @@ public class Player : MonoBehaviour {
             this.jump = false;
             this.rigidbody.velocity = Vector3.zero;
             this.rigidbody.AddForce(100f * Vector3.up, ForceMode.Impulse);
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "obstacle")
+        {
+            this.rigidbody.AddForce(new Vector2(-50, 20), ForceMode.Impulse);
+            this.rigidbody.detectCollisions = false;
+            this.audioSource.PlayOneShot(this.sfxDeath);
         }
     }
 }
