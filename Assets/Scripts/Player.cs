@@ -6,7 +6,7 @@ public class Player : MonoBehaviour {
 
     private Animator animator;
     private bool jump;
-    private Rigidbody rigidbody;
+    private Rigidbody rigidBody;
     private AudioSource audioSource;
 
     [SerializeField]
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour {
 	void Start () {
         this.animator = GetComponent<Animator>();
         this.jump = false;
-        this.rigidbody = GetComponent<Rigidbody>();
+        this.rigidBody = GetComponent<Rigidbody>();
         this.audioSource = GetComponent<AudioSource>();
 	}
 	
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour {
             animator.Play("Jump");
             this.audioSource.PlayOneShot(this.sfxJump);
             this.jump = true;
-            this.rigidbody.useGravity = true;
+            this.rigidBody.useGravity = true;
         }
 	}
 
@@ -45,8 +45,8 @@ public class Player : MonoBehaviour {
         if (this.jump)
         {
             this.jump = false;
-            this.rigidbody.velocity = Vector3.zero;
-            this.rigidbody.AddForce(100f * Vector3.up, ForceMode.Impulse);
+            this.rigidBody.velocity = Vector3.zero;
+            this.rigidBody.AddForce(100f * Vector3.up, ForceMode.Impulse);
         }
     }
 
@@ -54,8 +54,8 @@ public class Player : MonoBehaviour {
     {
         if (collision.gameObject.tag == "obstacle")
         {
-            this.rigidbody.AddForce(new Vector2(-50, 20), ForceMode.Impulse);
-            this.rigidbody.detectCollisions = false;
+            this.rigidBody.AddForce(new Vector2(-50, 20), ForceMode.Impulse);
+            this.rigidBody.detectCollisions = false;
             this.audioSource.PlayOneShot(this.sfxDeath);
             GameManager.gameManager.PlayerCollided();
         }
