@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -7,9 +8,14 @@ public class GameManager : MonoBehaviour {
 
     private bool isPlayerActive = false;
     private bool isGameOver = false;
+    private bool isGamePlaying = false;
+
+    [SerializeField]
+    private GameObject mainMenu;
 
     public bool IsPlayerActive { get { return isPlayerActive; } }
     public bool IsGameOver { get { return isGameOver; } }
+    public bool IsGamePlaying { get { return isGamePlaying; } }
 
     void Awake()
     {
@@ -19,6 +25,8 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+
+        Assert.IsNotNull(this.gameObject);
     }
 
 	// Use this for initialization
@@ -39,5 +47,11 @@ public class GameManager : MonoBehaviour {
     public void PlayerStartedGame()
     {
         this.isPlayerActive = true;
+    }
+
+    public void StartGame()
+    {
+        this.mainMenu.SetActive(false);
+        this.isGamePlaying = true;
     }
 }

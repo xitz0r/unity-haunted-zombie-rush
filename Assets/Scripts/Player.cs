@@ -30,7 +30,7 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!GameManager.gameManager.IsGameOver && Input.GetMouseButtonDown(0))
+        if (!GameManager.gameManager.IsGameOver && Input.GetMouseButtonDown(0) && GameManager.gameManager.IsGamePlaying)
         {
             GameManager.gameManager.PlayerStartedGame();
             animator.Play("Jump");
