@@ -30,8 +30,9 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0))
+        if (!GameManager.gameManager.IsGameOver && Input.GetMouseButtonDown(0))
         {
+            GameManager.gameManager.PlayerStartedGame();
             animator.Play("Jump");
             this.audioSource.PlayOneShot(this.sfxJump);
             this.jump = true;
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour {
             this.rigidbody.AddForce(new Vector2(-50, 20), ForceMode.Impulse);
             this.rigidbody.detectCollisions = false;
             this.audioSource.PlayOneShot(this.sfxDeath);
+            GameManager.gameManager.PlayerCollided();
         }
     }
 }

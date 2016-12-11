@@ -11,6 +11,12 @@ public class Rock : MovableObject {
         StartCoroutine(MoveRock(bottomPosition));
 	}
 
+    protected override void Update()
+    {
+        if (GameManager.gameManager.IsPlayerActive)
+            base.Update();
+    }
+
     IEnumerator MoveRock(Vector3 target)
     {
         while (Mathf.Abs((target - transform.localPosition).y) > 0.5f)

@@ -13,11 +13,14 @@ public class MovableObject : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected virtual void Update () {
         //if (transform.localPosition.x == 
-        transform.Translate(Vector3.left * Time.deltaTime * this.speed);
+        if (!GameManager.gameManager.IsGameOver)
+        {
+            transform.Translate(Vector3.left * Time.deltaTime * this.speed);
 
-        if (transform.localPosition.x <= resetXPosition)
-            transform.position = new Vector3(restartXPosition, transform.localPosition.y, transform.localPosition.z);
+            if (transform.localPosition.x <= resetXPosition)
+                transform.position = new Vector3(restartXPosition, transform.localPosition.y, transform.localPosition.z);
+        }
 	}
 }
