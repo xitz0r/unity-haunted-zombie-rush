@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour {
     private bool isPlayerActive = false;
     private bool isGameOver = false;
     private bool isGamePlaying = false;
+    private AsyncOperation async;
 
     [SerializeField]
     private GameObject mainMenu;
@@ -19,12 +21,13 @@ public class GameManager : MonoBehaviour {
 
     void Awake()
     {
-        if (gameManager == null)
+        //if (gameManager == null)
             gameManager = this;
-        else if (gameManager != this)
+        /*else if (gameManager != this)
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+        */
 
         Assert.IsNotNull(this.gameObject);
     }
@@ -42,6 +45,7 @@ public class GameManager : MonoBehaviour {
     public void PlayerCollided()
     {
         this.isGameOver = true;
+        StartCoroutine("loadGameOver");
     }
 
     public void PlayerStartedGame()
@@ -53,5 +57,21 @@ public class GameManager : MonoBehaviour {
     {
         this.mainMenu.SetActive(false);
         this.isGamePlaying = true;
+    }
+
+    IEnumerator loadGameOver()
+    {
+        Debug.LogWarning("ASYNC LOAD STARTED - " +
+           "DO NOT EXIT PLAY MODE UNTIL SCENE LOADS... UNITY WILL CRASH");
+        async = SceneManager.LoadSceneAsync("gameover");
+        async.allowSceneActivation = false;
+
+        yield return new WaitForSeconds(3);
+
+        async.allowSceneActivation = true;
+
+        SceneManager.UnloadScene("game");
+
+        yield return async;
     }
 }

@@ -27,6 +27,7 @@ public class RestartGame : MonoBehaviour {
            "DO NOT EXIT PLAY MODE UNTIL SCENE LOADS... UNITY WILL CRASH");
         async = SceneManager.LoadSceneAsync("game");
         async.allowSceneActivation = false;
+        SceneManager.UnloadScene("gameover");
         yield return async;
     }
 }
