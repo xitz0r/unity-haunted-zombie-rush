@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Rock : MovableObject {
+public class Rock : MonoBehaviour {
 
     [SerializeField] Vector3 topPosition;
     [SerializeField] Vector3 bottomPosition;
@@ -11,10 +11,11 @@ public class Rock : MovableObject {
         StartCoroutine(MoveRock(bottomPosition));
 	}
 
-    protected override void Update()
+    void Update()
     {
-        if (GameManager.gameManager.IsPlayerActive)
-            base.Update();
+        transform.Rotate(Vector3.up, 30f * Time.deltaTime);
+        //if (GameManager.gameManager.IsPlayerActive)
+            //base.Update();
     }
 
     IEnumerator MoveRock(Vector3 target)
@@ -22,7 +23,7 @@ public class Rock : MovableObject {
         while (Mathf.Abs((target - transform.localPosition).y) > 0.5f)
         {
             Vector3 direction = target.y == topPosition.y ? Vector3.up : Vector3.down;
-            transform.localPosition += direction * Time.deltaTime * this.speed;
+            transform.localPosition += direction * Time.deltaTime;// * this.speed;
             yield return null;
         }
 
