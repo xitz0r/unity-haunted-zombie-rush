@@ -21,7 +21,13 @@ public class MovableObject : MonoBehaviour {
             transform.Translate(Vector3.left * Time.deltaTime * this.speed);
 
             if (transform.localPosition.x <= resetXPosition)
+            {
                 transform.position = new Vector3(restartXPosition, transform.localPosition.y, transform.localPosition.z);
+
+                var meshRenderer = gameObject.GetComponent<MeshRenderer>();
+                if (meshRenderer)
+                    gameObject.GetComponent<MeshRenderer>().enabled = true;
+            }
         }
 	}
 }
