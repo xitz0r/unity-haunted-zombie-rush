@@ -11,9 +11,13 @@ public class GameManager : MonoBehaviour {
     private bool isGameOver = false;
     private bool isGamePlaying = false;
     private AsyncOperation async;
+    private AudioSource audioSource;
 
     [SerializeField]
     private GameObject mainMenu;
+
+    [SerializeField]
+    private AudioClip gameMusic;
 
     public bool IsPlayerActive { get { return isPlayerActive; } }
     public bool IsGameOver { get { return isGameOver; } }
@@ -34,7 +38,9 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        this.audioSource = GetComponent<AudioSource>();
+
+        Assert.IsNotNull(this.audioSource);
 	}
 	
 	// Update is called once per frame
@@ -57,6 +63,8 @@ public class GameManager : MonoBehaviour {
     {
         this.mainMenu.SetActive(false);
         this.isGamePlaying = true;
+        this.audioSource.clip = this.gameMusic;
+        this.audioSource.Play();
     }
 
     IEnumerator loadGameOver()
