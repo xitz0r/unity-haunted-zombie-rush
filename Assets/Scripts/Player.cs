@@ -8,7 +8,6 @@ public class Player : MonoBehaviour {
     private bool jump;
     private Rigidbody rigidBody;
     private AudioSource audioSource;
-    private int points = 0;
 
     [SerializeField]
     private AudioClip sfxJump;
@@ -58,7 +57,6 @@ public class Player : MonoBehaviour {
             this.rigidBody.AddForce(new Vector2(-50, 20), ForceMode.Impulse);
             this.rigidBody.detectCollisions = false;
             this.audioSource.PlayOneShot(this.sfxDeath);
-            Debug.LogWarning("point = " + this.points);
             GameManager.gameManager.PlayerCollided();
         }
     }
@@ -67,7 +65,7 @@ public class Player : MonoBehaviour {
     {
         if (collider.tag == "Point" && collider.gameObject.GetComponent<MeshRenderer>().isVisible)
         {
-            this.points++;
+            GameManager.gameManager.AddPoint();
             collider.gameObject.GetComponent<Coin>().PlaySound(this.audioSource);
             collider.gameObject.GetComponent<MeshRenderer>().enabled = false;
         }

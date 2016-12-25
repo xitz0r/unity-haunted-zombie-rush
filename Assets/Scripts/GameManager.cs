@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour {
     private bool isGamePlaying = false;
     private AsyncOperation async;
     private AudioSource audioSource;
+    private int points = 0;
 
     [SerializeField]
     private GameObject mainMenu;
@@ -81,5 +82,10 @@ public class GameManager : MonoBehaviour {
         SceneManager.UnloadScene("game");
 
         yield return async;
+    }
+
+    public void AddPoint()
+    {
+        this.points++;
     }
 }
