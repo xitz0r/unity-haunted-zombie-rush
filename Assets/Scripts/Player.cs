@@ -60,4 +60,14 @@ public class Player : MonoBehaviour {
             GameManager.gameManager.PlayerCollided();
         }
     }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.tag == "Point" && collider.gameObject.GetComponent<MeshRenderer>().isVisible)
+        {
+            GameManager.gameManager.AddPoint();
+            collider.gameObject.GetComponent<Coin>().PlaySound(this.audioSource);
+            collider.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
 }

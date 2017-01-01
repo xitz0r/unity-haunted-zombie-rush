@@ -2,6 +2,7 @@
 using UnityEngine.Assertions;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -12,6 +13,10 @@ public class GameManager : MonoBehaviour {
     private bool isGamePlaying = false;
     private AsyncOperation async;
     private AudioSource audioSource;
+    private int points = 0;
+
+    [SerializeField]
+    private Text text;
 
     [SerializeField]
     private GameObject mainMenu;
@@ -34,6 +39,7 @@ public class GameManager : MonoBehaviour {
         */
 
         Assert.IsNotNull(this.gameObject);
+        Assert.IsNotNull(this.text);
     }
 
 	// Use this for initialization
@@ -81,5 +87,11 @@ public class GameManager : MonoBehaviour {
         SceneManager.UnloadScene("game");
 
         yield return async;
+    }
+
+    public void AddPoint()
+    {
+        this.points++;
+        this.text.text = "Score: " + this.points;
     }
 }
