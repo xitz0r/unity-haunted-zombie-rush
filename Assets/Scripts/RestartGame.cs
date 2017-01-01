@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
 
 public class RestartGame : MonoBehaviour {
@@ -8,6 +9,7 @@ public class RestartGame : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        ShowAd();
         StartCoroutine("load");
     }
 	
@@ -29,5 +31,11 @@ public class RestartGame : MonoBehaviour {
         async.allowSceneActivation = false;
         SceneManager.UnloadScene("gameover");
         yield return async;
+    }
+
+    public void ShowAd()
+    {
+        if (Advertisement.IsReady())
+            Advertisement.Show();
     }
 }
